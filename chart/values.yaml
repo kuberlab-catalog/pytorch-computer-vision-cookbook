@@ -26,11 +26,13 @@ chapters:
     kind: git
 
 # Pip packages may be specified here in format that pip accepts.
+# Install for two iterations because pycocotools can not be installed w/o installed Cython
 packages:
   - albumentations==0.4.2
   - cycler==0.10.0
   - imgaug==0.2.6
   - opencv-python-headless==4.1.1.26
   - Cython==0.29.16
-  - pycocotools==2.0
   - torchsummary==1.5.1
+packages2:
+  - pycocotools==2.0

@@ -9,6 +9,11 @@ spec:
       - "{{ $value }}"
       {{- end }}
       manager: "pip3"
+    - names:
+      {{- range $i, $value := .packages2 }}
+      - "{{ $value }}"
+      {{- end }}
+      manager: "pip3"
   default_mount_path: "/notebooks"
   tasks:
   - name: run-chapter
