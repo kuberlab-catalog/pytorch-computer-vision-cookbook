@@ -1,0 +1,85 @@
+kind: MLApp
+metadata:
+  name: pytorch
+spec:
+  package_manager: "pip3"
+  packages:
+    - names:
+      {{- range $i, $value := .packages }}
+      - "{{ $value }}"
+      {{- end }}
+      manager: "pip3"
+  default_mount_path: "/notebooks"
+  tasks:
+  - name: run-chapter
+    resources:
+    - name: worker
+      replicas: 1
+      restartPolicy: Never
+      maxRestartCount: 0
+      allowFail: true
+      images:
+        cpu: "kuberlab/pytorch:{{.pytorch_version.value}}-cpu"
+        gpu: "kuberlab/pytorch:{{.pytorch_version.value}}-gpu"
+      command: "jupyter nbconvert Chapter01/Chapter1.ipynb --execute --to html --stdout --ExecutePreprocessor.timeout=-1 | python tools/submit_report.py"
+      workdir: "$CHAPTERS_DIR"
+      resources:
+        accelerators:
+        {{- if .useGPU.value }}
+          gpu: 1
+        {{- else }}
+          gpu: 0
+        {{- end }}
+        requests:
+          cpu: "1"
+          memory: 1Gi
+        limits:
+          cpu: "2"
+          memory: 4Gi
+      default_volume_mapping: true
+  uix:
+  - name: jupyter
+    displayName: Jupyter
+    images:
+      cpu: "kuberlab/pytorch:{{.pytorch_version.value}}-cpu"
+      gpu: "kuberlab/pytorch:{{.pytorch_version.value}}-gpu"
+    resources:
+      accelerators:
+      {{- if .useGPU.value }}
+        gpu: 1
+      {{- else }}
+        gpu: 0
+      {{- end }}
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 1000m
+        memory: 4Gi
+    ports:
+    - port: 8888
+      targetPort: 8888
+      protocol: TCP
+      name: http
+    default_volume_mapping: true
+  volumes:
+  - name: training
+    clusterStorage: {{ .storage.value }}
+  - gitRepo:
+      repository: {{ gitRepo .src.value }}
+    name: chapters
+    subPath: {{ gitSubPath .chapters.value }}
+  - isLibDir: true
+    name: lib
+    clusterStorage: {{ .storage.value }}
+  - name: data
+    clusterStorage: {{ .storage.value }}
+  - mountPath: /notebooks
+    name: code
+    subPath: code
+    clusterStorage: {{ .storage.value }}
+  - mountPath: /dev/shm
+    name: shared
+    emptyDir:
+      sizeLimit: 8096Mi
+      medium: Memory

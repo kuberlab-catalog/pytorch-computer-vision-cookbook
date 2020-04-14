@@ -1,0 +1,16 @@
+Description: PyTorch Computer Vision Cookbook
+Engine: gotpl
+Home: http://kuberlab.com
+Icon: https://raw.githubusercontent.com/kuberlab-catalog/pytorch-computer-vision-cookbook/master/chart/cover.png
+Keywords:
+- PyTorch
+- book
+- template
+- kuberlab
+- kuberlabapptemplate
+Maintainers:
+- Email: monstarnn@gmail.com
+  Name: Vadim Grishin
+Name: pytorch-computer-vision-cookbook
+Version: 1.0.0
+Type: mlapp-v2
