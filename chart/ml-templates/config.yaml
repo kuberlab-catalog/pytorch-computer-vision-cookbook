@@ -66,7 +66,7 @@ spec:
   - name: training
     clusterStorage: {{ .storage.value }}
   - gitRepo:
-      repository: {{ gitRepo .src.value }}
+      repository: {{ gitRepo .chapters.value }}
     name: chapters
     subPath: {{ gitSubPath .chapters.value }}
   - isLibDir: true
