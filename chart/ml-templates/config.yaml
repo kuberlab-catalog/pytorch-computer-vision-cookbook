@@ -83,6 +83,15 @@ spec:
     name: code
     subPath: code
     clusterStorage: {{ .storage.value }}
+  - name: data
+    {{- if .dataset.value }}
+    datasetFS:
+      workspace: {{ .dataset.workspace }}
+      dataset: {{ .dataset.value }}
+      version: {{ .dataset.version }}
+    {{- else }}
+    clusterStorage: {{ .storage.value }}
+    {{- end }}
   - mountPath: /dev/shm
     name: shared
     emptyDir:
