@@ -25,6 +25,14 @@ chapters:
     name: "Chapters"
     kind: git
 
+dataset:
+ value: 'histopathological-cancer-detection'
+ version: '1.0.1'
+ workspace: 'kuberlab-demo'
+ wizard:
+   name: "Cancer detection dataset"
+   kind: dataset
+
 # Pip packages may be specified here in format that pip accepts.
 # Install for two iterations because pycocotools can not be installed w/o installed Cython
 packages:
