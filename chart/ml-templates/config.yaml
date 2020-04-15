@@ -77,8 +77,6 @@ spec:
   - isLibDir: true
     name: lib
     clusterStorage: {{ .storage.value }}
-  - name: data
-    clusterStorage: {{ .storage.value }}
   - mountPath: /notebooks
     name: code
     subPath: code
