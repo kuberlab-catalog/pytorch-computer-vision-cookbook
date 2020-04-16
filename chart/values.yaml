@@ -28,7 +28,7 @@ cancer_dataset:
     kind: dataset
 
 stl10_dataset:
-  value: 'torchvivsion-stl10'
+  value: 'torchvision-stl10'
   version: '1.0.0'
   workspace: 'kuberlab-demo'
   wizard:
