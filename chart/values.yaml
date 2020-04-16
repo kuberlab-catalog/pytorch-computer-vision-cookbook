@@ -29,7 +29,7 @@ cancer_dataset:
 
 stl10_dataset:
   value: 'torchvision-stl10'
-  version: '1.0.0'
+  version: '1.0.1'
   workspace: 'kuberlab-demo'
   wizard:
     name: "torchvision.STL10 dataset"
@@ -50,5 +50,7 @@ packages:
   - opencv-python-headless==4.1.1.26
   - Cython==0.29.16
   - torchsummary==1.5.1
+  - xlrd
+  - tqdm
 packages2:
   - pycocotools==2.0
