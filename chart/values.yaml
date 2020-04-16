@@ -19,19 +19,27 @@ useGPU:
     name: Enable GPU in Jupyter
     kind: boolean
 
-chapters:
-  value: https://github.com/kuberlab-catalog/pytorch-computer-vision-cookbook/tree/master/chapters
+cancer_dataset:
+  value: 'histopathological-cancer-detection'
+  version: '1.0.1'
+  workspace: 'kuberlab-demo'
   wizard:
-    name: "Chapters"
-    kind: git
+    name: "Cancer detection dataset"
+    kind: dataset
 
-dataset:
- value: 'histopathological-cancer-detection'
- version: '1.0.1'
- workspace: 'kuberlab-demo'
- wizard:
-   name: "Cancer detection dataset"
-   kind: dataset
+stl10_dataset:
+  value: 'torchvivsion-stl10'
+  version: '1.0.0'
+  workspace: 'kuberlab-demo'
+  wizard:
+    name: "torchvision.STL10 dataset"
+    kind: dataset
+
+installChapters:
+  value: true
+  wizard:
+    name: Install book chapters immediately
+    kind: boolean
 
 # Pip packages may be specified here in format that pip accepts.
 # Install for two iterations because pycocotools can not be installed w/o installed Cython

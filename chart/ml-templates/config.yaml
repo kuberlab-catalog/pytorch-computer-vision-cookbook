@@ -16,6 +16,36 @@ spec:
       manager: "pip3"
   default_mount_path: "/notebooks"
   tasks:
+  - name: install-chapters
+    {{- if .installChapters.value }}
+    type: init
+    {{- end }}
+    resources:
+    - name: worker
+      replicas: 1
+      restartPolicy: Never
+      maxRestartCount: 0
+      allowFail: true
+      images:
+        cpu: "kuberlab/pytorch:{{.pytorch_version.value}}-cpu"
+        gpu: "kuberlab/pytorch:{{.pytorch_version.value}}-gpu"
+      command: >-
+        cd /tmp
+        && git clone https://github.com/kuberlab-catalog/pytorch-computer-vision-cookbook.git
+        && cp -r pytorch-computer-vision-cookbook/chapters/* $CHAPTERS_DIR
+        && rm -r pytorch-computer-vision-cookbook
+      workdir: "$CHAPTERS_DIR"
+      resources:
+        accelerators:
+          gpu: 0
+        requests:
+          cpu: "100m"
+          memory: 256Mi
+        limits:
+          cpu: "1"
+          memory: 4Gi
+      volumes:
+      - name: chapters
   - name: run-chapter
     resources:
     - name: worker
@@ -68,12 +98,12 @@ spec:
       name: http
     default_volume_mapping: true
   volumes:
+  - name: data
+    clusterStorage: {{ .storage.value }}
   - name: training
     clusterStorage: {{ .storage.value }}
-  - gitRepo:
-      repository: {{ gitRepo .chapters.value }}
-    name: chapters
-    subPath: {{ gitSubPath .chapters.value }}
+  - name: chapters
+    clusterStorage: {{ .storage.value }}
   - isLibDir: true
     name: lib
     clusterStorage: {{ .storage.value }}
@@ -81,12 +111,21 @@ spec:
     name: code
     subPath: code
     clusterStorage: {{ .storage.value }}
-  - name: data
-    {{- if .dataset.value }}
+  - name: cancer
+    {{- if .cancer_dataset.value }}
     datasetFS:
-      workspace: {{ .dataset.workspace }}
-      dataset: {{ .dataset.value }}
-      version: {{ .dataset.version }}
+      workspace: {{ .cancer_dataset.workspace }}
+      dataset: {{ .cancer_dataset.value }}
+      version: {{ .cancer_dataset.version }}
+    {{- else }}
+    clusterStorage: {{ .storage.value }}
+    {{- end }}
+  - name: stl10
+    {{- if .stl10_dataset.value }}
+    datasetFS:
+      workspace: {{ .stl10_dataset.workspace }}
+      dataset: {{ .stl10_dataset.value }}
+      version: {{ .stl10_dataset.version }}
     {{- else }}
     clusterStorage: {{ .storage.value }}
     {{- end }}
