@@ -129,6 +129,15 @@ spec:
     {{- else }}
     clusterStorage: {{ .storage.value }}
     {{- end }}
+  - name: ichallenge
+    {{- if .ichallenge_dataset.value }}
+    datasetFS:
+      workspace: {{ .ichallenge_dataset.workspace }}
+      dataset: {{ .ichallenge_dataset.value }}
+      version: {{ .ichallenge_dataset.version }}
+    {{- else }}
+    clusterStorage: {{ .storage.value }}
+    {{- end }}
   - mountPath: /dev/shm
     name: shared
     emptyDir:
