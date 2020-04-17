@@ -129,12 +129,12 @@ spec:
     {{- else }}
     clusterStorage: {{ .storage.value }}
     {{- end }}
-  - name: ichallenge
-    {{- if .ichallenge_dataset.value }}
+  - name: training400
+    {{- if .training400_dataset.value }}
     datasetFS:
-      workspace: {{ .ichallenge_dataset.workspace }}
-      dataset: {{ .ichallenge_dataset.value }}
-      version: {{ .ichallenge_dataset.version }}
+      workspace: {{ .training400_dataset.workspace }}
+      dataset: {{ .training400_dataset.value }}
+      version: {{ .training400_dataset.version }}
     {{- else }}
     clusterStorage: {{ .storage.value }}
     {{- end }}

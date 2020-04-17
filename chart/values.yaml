@@ -35,12 +35,12 @@ stl10_dataset:
     name: "torchvision.STL10 dataset"
     kind: dataset
 
-ichallenge_dataset:
-  value: 'iChallenge-AMD'
-  version: '1.0.1'
+training400_dataset:
+  value: 'training400'
+  version: '1.0.0'
   workspace: 'kuberlab-demo'
   wizard:
-    name: "iChallenge-AMD dataset"
+    name: "Training400 dataset"
     kind: dataset
 
 installChapters:
